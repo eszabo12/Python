@@ -1,0 +1,22 @@
+# Elle Szabo
+# ITP 115, Spring 2019
+# Assignment 1
+# eszabo@usc.edu
+
+# Get user input for story
+planet = input("Name a planet in the solar system: ")
+favAnimal = input("What is your favorite animal? ")
+color = input("Name a color: ")
+numRestaurants = int(input("Give a numer: "))
+priceMeal = int(input("Give another number: "))
+
+# Calculating the total amount spent on money on planet
+totalPrice = float(numRestaurants * priceMeal)
+
+# Back to user input
+
+
+
+print("You are about to embark on a trip to \"" + planet + ",\" where you will see a zoo of entirely your favorite animal, \"" + end="")
+print(favAnimal + "\". You will also try to count the number of \"", color, "\" cacti and go to many of the region's infamous boiled cacti restaurants. You go to\"", numRestaurants + end = '')
+print(", which are \"$" + priceMeal + "\" each visit. You spend \"$" + totalPrice + "\"on food while on planet", planet + "." + end = "")
