@@ -1,0 +1,113 @@
+# Elle Szabo
+# ITP 115, Spring 2019
+# Assignment 5
+# eszabo@usc.edu
+from typing import List
+
+
+#intializing the lists
+total_seats = 10
+firstclass = []
+economy = []
+
+#creating the empty lists
+for i in range(4):
+    firstclass.append("")
+for i in range(total_seats - 4):
+    economy.append("")
+
+# a function that changes you from first class to economy or vice versa if seats are filled
+def changeClass(whichclass):
+    if acceptable.lower() == "y":
+        #sees which class they initially chose
+        if whichclass == 1:
+            if "" in economy:
+                index = economy.index("")
+                economy[index] = name
+        elif whichclass == 2:
+            if "" in firstclass:
+                index = firstclass.index("")
+                firstclass[index] = name
+    #prints this if it's not acceptable to change classes
+    else:
+        print("Next flight leaves in 3 hours.")
+    return
+#prints the boarding pass
+def printPass(seatNum, passName):
+    print("== == == = BOARDING PASS == == == =")
+    print("Seat  #:", seatNum)
+    print("Passenger Name:", passName.capitalize())
+    print("== == == == == == == == == == == == =")
+    return
+
+choice = 0
+while choice != -1:
+    print("Choose an option:")
+    print("1: Assign Seat.")
+    print("2: Print Seat Map.")
+    print("3: Print Boarding pass.")
+    print("-1: Quit.")
+    choice = int(input())
+    #Assign seat
+    if choice == 1:
+        if "" in economy or "" in firstclass:
+            name = input("What is the passenger's name? \n")
+            whichClass = int(input("Type 1 for First Class or Type 2 for Economy. "))
+            if whichClass == 1:
+                #if there is an empty seat then assign the name to the empty seat index
+                if "" in firstclass:
+                    index = firstclass.index("")
+                    firstclass[index] = name
+                else:
+                    #if there's not a seat open in the selected class then give this prompt
+                    acceptable = input("Is it acceptable to be placed in the economy section? (y/n)")
+                    changeClass(whichClass)
+            else:
+                if "" in economy:
+                    index = economy.index("")
+                    economy[index] = name
+                else:
+                    acceptable = input("Is it acceptable to be placed in the first class section? (y/n)")
+                    changeClass(whichClass)
+        else:
+            #if there are no seats open anywhere, displays this
+            print("Next flight leaves in 3 hours.")
+        # aesthetic
+        print("\n")
+    elif choice == 2:
+        #combines first class and economy seats into list
+        seats = firstclass + economy
+        for i in range(total_seats):
+            # replaces "" with "Empty"
+            if seats[i] == "":
+                var = "Empty"
+            else:
+                var = seats[i]
+            print("\tSeat #", str(i +1) + ":\t", var)
+        print("\n")
+    elif choice == 3:
+        seats = firstclass + economy
+        whichPrint = int(input("Type 1 to give your name or 2 to give your seat number."))
+        if whichPrint == 1:
+            passName = input("What is your name?")
+            # looks for passenger
+            if passName in seats:
+                seatNum = seats.index(passName)+1
+            else:
+                print("No passenger with that information could be found.")
+            printPass(seatNum, passName)
+        else:
+            seatNum = int(input("What is your seat number?"))
+            #if the seat number exceeds total seats, error message
+            if seatNum > total_seats:
+                print("Invalid number-no boarding pass found")
+            else:
+                passName = seats[seatNum-1]
+                if passName == "":
+                    passName = "Empty"
+                printPass(seatNum, passName)
+    # if the user didn't input 1, 2, 3, or -1
+    elif choice != -1:
+        print("Invalid menu option.\n")
+#exit message
+print("Have a nice day!")
