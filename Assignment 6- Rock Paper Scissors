@@ -1,0 +1,112 @@
+# Elle Szabo
+# ITP 115, Spring 2019
+# Assignment 6
+# eszabo@usc.edu
+
+import random
+#displays the menu
+def displayMenu():
+    print("Welcome! Let's play rock, paper, scissors.")
+    print("The rules of the game are:")
+    print("\tRock smashes scissors")
+    print("\tScissors cut paper")
+    print("\tPaper covers rock")
+    print("\tIf both the choices are the same, it's a tie")
+#picks a random number for the computer to use between 0-2
+def getComputerChoice():
+    computerChoice = random.randrange(3)
+    return computerChoice
+#asks the player what they want to pick
+def getPlayerChoice():
+    playerChoice = int(input("Please choose (0) for rock, (1) for paper or (2) for scissors\n"))
+    return playerChoice
+#plays the round and sees who wins
+def playRound(playerChoice, computerChoice):
+    if playerChoice == computerChoice:
+        result = 0
+        stringSummary = ""
+    if playerChoice == 1 and computerChoice == 0:
+        result = 1
+    if playerChoice == 0 and computerChoice == 1:
+        result = -1
+    if playerChoice == 0 and computerChoice == 2:
+        result = 1
+    if playerChoice == 2 and computerChoice == 0:
+        result = -1
+    if playerChoice == 1 and computerChoice == 2:
+        result = -1
+    if playerChoice == 2 and computerChoice == 1:
+        result = 1
+    return result
+#uses the player or computer choice to see what they picked
+def stringChoice(choice):
+    stringChoice = {
+        0: "rock",
+        1: "paper",
+        2: "scissors"
+    }
+    return stringChoice.get(choice)
+#uses the choices to describe the game for printing
+def stringSummary(playerChoice, computerChoice):
+    if playerChoice == computerChoice:
+        stringSummary = ""
+    if (playerChoice == 1 and computerChoice == 0) or (playerChoice == 0 and computerChoice == 1):
+        stringSummary = "Paper covers rock."
+    if (playerChoice == 0 and computerChoice == 2) or (playerChoice == 2 and computerChoice == 0):
+        stringSummary = "Rock smashes scissors."
+    if (playerChoice == 1 and computerChoice == 2) or (playerChoice == 2 and computerChoice == 1):
+        stringSummary = "Scissors cut paper."
+    return stringSummary
+#uses the result from playRound to describe who won
+def stringResult(result):
+    stringResult = {
+        0: "It's a tie.",
+        1: "You win!",
+        -1: "Computer wins!"
+    }
+    return stringResult.get(result)
+#asks the player if they want to continue
+def continueGame():
+    yesNo = input("Do you want to continue? (Y/N)\n")
+    if yesNo.lower() == "y":
+        continueGame = True
+    if yesNo.lower() == "n":
+        continueGame = False
+    return continueGame
+# fixes the singular/plural issue while printing
+def stringGames(playerWins):
+    if playerWins == 1:
+        games1 = "game"
+    else:
+        games1 = "games"
+    return games1
+#main function
+def main():
+    playerWins = 0
+    computerWins = 0
+    numTies = 0
+    keepGoing = True
+    while keepGoing == True:
+        displayMenu()
+        computerChoice = getComputerChoice()
+        playerChoice = getPlayerChoice()
+        result = playRound(playerChoice, computerChoice)
+        # increments the number of wins in each iteration to print at the end
+        if result == 1:
+            playerWins += 1
+        if result == -1:
+            computerWins += 1
+        if result == 0:
+            numTies += 1
+        print("You chose", stringChoice(playerChoice) + ".")
+        print("The computer chose", stringChoice(computerChoice) + ".")
+        print(stringSummary(playerChoice, computerChoice), end=" ")
+        print(stringResult(result))
+        keepGoing = continueGame()
+        #this is just so there is one line between every iteration-- if I do \n then it gives 2 lines
+        print("")
+    print("You won", playerWins, stringGames(playerWins)+".")
+    print("The computer won", computerWins, stringGames(computerWins)+".")
+    print("You tied with the computer for", numTies, stringGames(numTies)+".\n")
+    print("Thanks for playing!")
+main()
